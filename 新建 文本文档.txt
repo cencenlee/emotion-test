@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情绪劳动过载自测问卷</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            padding: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .question {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        .options {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+        }
+        .options label {
+            cursor: pointer;
+            color: #555;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: #ff9a49;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-submit:hover {
+            background: #ff8526;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #eef7ff;
+            border-radius: 10px;
+            display: none;
+        }
+        .result h3 {
+            color: #2d8cf0;
+            margin-bottom: 10px;
+        }
+        .result p {
+            line-height: 1.6;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">你的微笑，其实在加班</div>
+        <div class="subtitle">情绪劳动过载自测问卷</div>
+
+        <form id="quizForm">
+            <!-- 题目1 -->
+            <div class="question">
+                <div class="question-text">1. 下班后“笑不动了”，连说话都觉得累</div>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="1" required> 是</label>
+                    <label><input type="radio" name="q1" value="0"> 否</label>
+                </div>
+            </div>
+
+            <!-- 题目2 -->
+            <div class="question">
+                <div class="question-text">2. 一点小事就大发雷霆，控制不住脾气</div>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="1"> 是</label>
+                    <label><input type="radio" name="q2" value="0"> 否</label>
+                </div>
+            </div>
+
+            <!-- 题目3 -->
+            <div class="question">
+                <div class="question-text">3. 睡了10小时还是觉得疲惫</div>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="1"> 是</label>
+                    <label><input type="radio" name="q3" value="0"> 否</label>
+                </div>
+            </div>
+
+            <!-- 题目4 -->
+            <div class="question">
+                <div class="question-text">4. 变得麻木，对什么都提不起兴趣</div>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="1"> 是</label>
+                    <label><input type="radio" name="q4" value="0"> 否</label>
+                </div>
+            </div>
+
+            <!-- 题目5 -->
+            <div class="question">
+                <div class="question-text">5. 一想到上班就恶心、头痛</div>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="1"> 是</label>
+                    <label><input type="radio" name="q5" value="0"> 否</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">查看测评结果</button>
+        </form>
+
+        <!-- 结果展示 -->
+        <div class="result" id="result">
+            <h3>📊 你的测评结果</h3>
+            <p id="resultText"></p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('quizForm');
+        const result = document.getElementById('result');
+        const resultText = document.getElementById('resultText');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 计算得分
+            let score = 0;
+            const formData = new FormData(form);
+            for (let val of formData.values()) {
+                score += parseInt(val);
+            }
+
+            // 生成结果
+            let text = '';
+            if (score >= 3) {
+                text = `<strong>预警：你的情绪已严重透支！</strong><br>
+                你中了 ${score} 条信号，属于情绪劳动过载。<br>
+                建议立刻使用情绪缓冲区、微笑额度、情绪垃圾桶三大方法自救。<br>
+                如果持续超过2周，请寻求专业心理帮助。`;
+            } else {
+                text = `<strong>正常：你的情绪状态良好</strong><br>
+                你中了 ${score} 条信号，暂时没有情绪过载。<br>
+                继续保持对自己情绪的觉察，及时休息～`;
+            }
+
+            resultText.innerHTML = text;
+            result.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
